@@ -37,39 +37,6 @@ shadowJar {
     mergeServiceFiles()
 }
 
-publishing {
-    publications {
-        shadow(MavenPublication) { publication ->
-            project.shadow.component(publication)
-        }
-    }
-
-    repositories {
-        maven {
-            name "scala"
-            url "${artifactory_contextUrl}/${artifactory_release}"
-            credentials {
-                username "${artifactory_user}"
-                password "${artifactory_password}"
-            }
-        }
-    }
-}
-
-artifactory {
-    this.contextUrl = "${artifactory_contextUrl}"
-
-    publish {
-        repository {
-            repoKey = "${artifactory_release_local}"
-            username = "${artifactory_user}"
-            password = "${artifactory_password}"
-            maven = true
-        }
-    }
-}
-
 tasks.build.dependsOn(
-    shadowJar,
-    publishShadowPublicationToScalaRepository
+    shadowJar
 )
